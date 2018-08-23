@@ -71,6 +71,7 @@
 
 #if defined(PIOS_INCLUDE_RFM22B)
 #include <oplinkstatus.h>
+//#include <radiostatus.h>
 #endif
 
 // Flight Libraries
@@ -132,6 +133,8 @@ static uint8_t i2c_error_activity[PIOS_I2C_ERROR_COUNT_NUMELEM];
 #ifdef PIOS_INCLUDE_RFM22B
 static uint8_t previousRFXtalCap;
 static void oplinkSettingsUpdatedCb(UAVObjEvent *ev);
+//static void radioSettingsUpdatedCb(UAVObjEvent *ev);
+
 #endif
 
 extern uintptr_t pios_uavo_settings_fs_id;
@@ -477,6 +480,8 @@ static void oplinkSettingsUpdatedCb(__attribute__((unused)) UAVObjEvent *ev)
     }
 }
 #endif /* ifdef PIOS_INCLUDE_RFM22B */
+
+
 
 #ifdef DIAG_TASKS
 static void taskMonitorForEachCallback(uint16_t task_id, const struct pios_task_info *task_info, void *context)

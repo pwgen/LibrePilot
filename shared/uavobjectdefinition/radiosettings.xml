@@ -3,6 +3,7 @@
 	<object name="RadioSettings" singleinstance="true" settings="true" category="System">
 		<description>Radio configurations options.</description>
 		<field name="Protocol" units="" type="enum" elements="1" options="Disabled,OPLinkReceiver,OPLinkCoordinator,OpenLRS,EricsT" defaultvalue="Disabled"/>
+		<field name="Stat" units="" type="uint8" elements="1" defaultvalue="0"/>
 		<access gcs="readwrite" flight="readwrite"/>
 		<telemetrygcs acked="true" updatemode="onchange" period="0"/>
 		<telemetryflight acked="true" updatemode="onchange" period="0"/>
