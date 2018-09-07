@@ -52,6 +52,7 @@ MODULES += Osd/osdoutout
 MODULES += Logging
 MODULES += Telemetry
 MODULES += Notify
+MODULES += Sail
 
 OPTMODULES += AutoTune
 OPTMODULES += ComUsbBridge
