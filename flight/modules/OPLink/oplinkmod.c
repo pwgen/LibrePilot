@@ -100,7 +100,7 @@ int32_t OPLinkModInitialize(void)
     // Must registers objects here for system thread because ObjectManager started in OpenPilotInit
 
     // Call the module start function.
-    OPLinkModStart();
+	OPLinkModStart();
 
     return 0;
 }
@@ -122,7 +122,6 @@ static void systemTask(__attribute__((unused)) void *parameters)
     while (!initTaskDone) {
         vTaskDelay(10);
     }
-
 #ifndef PIOS_INCLUDE_WDG
 // if no watchdog is enabled, don't reset watchdog in MODULE_TASKCREATE_ALL loop
 #define PIOS_WDG_Clear()
