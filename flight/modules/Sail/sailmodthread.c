@@ -46,8 +46,8 @@
 #include "openpilot.h"
 #include "sailmodthread.h"
 #include "sail.h"
-//include "exampleobject1.h" // object the module will listen for updates (input)
-//include "exampleobject2.h" // object the module will update (output)
+#include "sailsettings.h" // object the module will listen for updates (input)
+#include "sailstatus.h" // object the module will update (output)
 //include "exampleings.h" // object holding module settings (input)
 
 // Private constants
@@ -70,15 +70,9 @@ static void sailTask(void *parameters);
  */
 int32_t SailModThreadInitialize()
 {
-    // Create object queue
     queue = xQueueCreate(MAX_QUEUE_SIZE, sizeof(UAVObjEvent));
-
-    // Listen for ExampleObject1 updates
-    //ExampleObject1ConnectQueue(queue);
-
-    // Start main task
+    SailSettingsConnectQueue(queue);
     xTaskCreate(sailTask, (const  char *)"SailThread", STACK_SIZE, NULL, TASK_PRIORITY, &taskHandle);
-
     return 0;
 }
 
@@ -88,54 +82,24 @@ int32_t SailModThreadInitialize()
 static void sailTask(__attribute__((unused)) void *parameters)
 {
     UAVObjEvent ev;
-//    ExampleSettingsData settings;
-//    ExampleObject1Data data1;
-//    ExampleObject1Data data2;
+    SailSettingsData settings;
+    SailStatusData  data;
 //    int32_t step;
-
-    // Main task loop
     while (1) {
-        // Check the event queue for any object updates. In this case
-        // we are only listening for the ExampleSettings object. However
-        // the module could listen to multiple objects.
-        // Since this object only executes on object updates, the task
-        // will block until an object event is pushed in the queue.
-        while (xQueueReceive(queue, &ev, portMAX_DELAY) != pdTRUE) {
-            ;
-        }
-
-        // Make sure that the object update is for ExampleObject1
-        // This is redundant in this example since we have only
-        // registered a single object in the queue, however
-        // in most practical cases there will be more than one
-        // object connected in the queue.
- //       if (ev.obj == ExampleObject1Handle()) {
-            // Update settings with latest value
-   //         ExampleSettingsGet(&settings);
-
-            // Get the input object
-     //       ExampleObject1Get(&data1);
-
-            // Determine how to update the output object
-       //     if (settings.StepDirection == EXAMPLESETTINGS_STEPDIRECTION_UP) {
-//                step = settings.StepSize;
-//            } else {
-//                step = -settings.StepSize;
-//            }
-
-            // Update data
- //           data2.Field1    = data1.Field1 + step;
- //           data2.Field2    = data1.Field2 + step;
- //           data2.Field3    = data1.Field3 + step;
-  //          data2.Field4[0] = data1.Field4[0] + step; 
-//            data2.Field4[1] = data1.Field4[1] + step;
-
-            // Update the ExampleObject2, after this function is called
-            // notifications to any other modules listening to that object
-            // will be sent and the GCS object will be updated through the
-            // telemetry link. All operations will take place asynchronously
-            // and the following call will return immediately.
-//            ExampleObject2Set(&data2);
- //       }
+      while (xQueueReceive(queue, &ev, portMAX_DELAY) != pdTRUE) { ; }
+      if (ev.obj == SailStatusHandle()) {
+	SailSettingsGet(&settings);
+	SailStatusGet(&data);
+	if (settings.BoatType == SAILSETTINGS_BOATTYPE_JOLLE) {
+	data.MainSailPosition=10;
+	SailStatusSet(&data);
+	}
+	if (settings.BoatType == SAILSETTINGS_BOATTYPE_SLOOP) {
+	data.MainSailPosition=20;
+	SailStatusSet(&data);
+	}
+	
+      }
     }
 }
+   

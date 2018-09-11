@@ -29,17 +29,10 @@ override USE_DSP_LIB := NO
 
 # List of mandatory modules to include
 MODULES += RadioComBridge
-<<<<<<< HEAD
 #MODULES += Radio
 
 # List of optional modules to include
 OPTMODULES = 
-=======
-MODULES +=  Radio
-
-# List of optional modules to include
-//OPTMODULES = Radio
->>>>>>> d47968ee0f772e04093bf2e2b5c12e0a7dd8d117
 
 # List C source files here (C dependencies are automatically generated).
 # Use file-extension c for "c-only"-files

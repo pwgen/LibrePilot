@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+	<object name="SailSettings" singleinstance="true" settings="true" category="System">
+		<description>SailBoat configurations options.</description>
+		<field name="BoatType" units="" type="enum" elements="1" options="Jolle,Sloop" defaultvalue="Jolle"/>
+		<field name="Motor" units="" type="enum" elements="1" options="Yes,No" defaultvalue="No"/>
+		<field name="Winches" units="" type="uint8" elements="1" defaultvalue="1"/>
+		<access gcs="readwrite" flight="readwrite"/>
+		<telemetrygcs acked="true" updatemode="onchange" period="0"/>
+		<telemetryflight acked="true" updatemode="onchange" period="0"/>
+		<logging updatemode="manual" period="0"/>
+	</object>
+</xml>
